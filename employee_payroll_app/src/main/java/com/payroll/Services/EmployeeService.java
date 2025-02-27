@@ -11,15 +11,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 @Service
 public class EmployeeService {
-
+    @Autowired
     private EmployeeRepository employeeRepository;
-    public EmployeeService(EmployeeRepository employeeRepository){
-        this.employeeRepository = employeeRepository;
-    }
+    
 
-    public Employee savEmployee(EmployeeDTO employeeDTO){
+    public ResponseEntity<Employee> savEmployee(EmployeeDTO employeeDTO){
         Employee employee = new Employee(employeeDTO.getName(), employeeDTO.getSalary());
-        return employeeRepository.save(employee);
+        Employee savedEmployee = employeeRepository.save(employee);
+        return ResponseEntity.ok(savedEmployee);
     }
 
     public ResponseEntity<List<Employee>> getAllEmployees(){
@@ -27,6 +26,25 @@ public class EmployeeService {
         return ResponseEntity.ok(employees);
     }
 
+    public ResponseEntity<Employee> getEmployeeById(Long id){
+        Employee employee = employeeRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Employee not found with the id: " + id));
+        return ResponseEntity.ok(employee);
+    }
+
+    public ResponseEntity<Employee> updateEmployee(Long id, EmployeeDTO updatetEmployee){
+        Employee employee = employeeRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Employee not found with the id: " + id));
+        employee.setName(updatetEmployee.getName());
+        employee.setSalary(updatetEmployee.getSalary());
+        Employee updated = employeeRepository.save(employee);
+        return ResponseEntity.ok(updated);
+    }
+
+    public ResponseEntity<String> deleteEmployee(Long id){
+        employeeRepository.deleteById(id);
+        return ResponseEntity.ok("Employee deleted with ID: " + id);
+    }
 
     
 }
