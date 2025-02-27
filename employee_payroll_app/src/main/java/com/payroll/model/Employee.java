@@ -22,7 +22,8 @@ public class Employee {
     @Min(value = 1000, message = "Salary must be at least 1000")
     private double salary;
 
-    public Employee(String name, double salary) {
+    public Employee(Long id, String name, double salary) {
+        this.id = id;
         this.name = name;
         this.salary = salary;
     }
