@@ -80,7 +80,7 @@ public class EmployeeController {
     public ResponseEntity<List<Employee>> getAllEmployees(){
         return employeeService.getAllEmployees();
     } 
-
+ 
     @GetMapping("/get/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
         return employeeService.getEmployeeById(id);
