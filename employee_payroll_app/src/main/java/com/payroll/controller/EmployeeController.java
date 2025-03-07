@@ -4,8 +4,11 @@ import com.payroll.Services.EmployeeService;
 import com.payroll.model.Employee;
 import com.payroll.repository.EmployeeRepository;
 
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -72,7 +75,7 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @PostMapping("/create-dto")
-    public ResponseEntity<Employee> createEmployeeWithDTO(@RequestBody EmployeeDTO employeeDTO){
+    public ResponseEntity<Employee> createEmployeeWithDTO(@Valid @RequestBody EmployeeDTO employeeDTO){
         return employeeService.savEmployee(employeeDTO);
     }
 
@@ -88,7 +91,7 @@ public class EmployeeController {
      
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody EmployeeDTO employeeDTO){
+    public ResponseEntity<Employee> updateEmployee(@Valid @PathVariable Long id, @RequestBody EmployeeDTO employeeDTO){
         return employeeService.updateEmployee(id, employeeDTO);
     }
 
